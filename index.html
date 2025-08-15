@@ -1,112 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Age Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #e8f0fe;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced Age Calculator</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg,#a1c4fd,#c2e9fb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
 
-    .age-calculator {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      max-width: 350px;
-      width: 100%;
-      text-align: center;
-    }
+  .age-calculator {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
 
-    h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
+  h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
 
-    input[type="date"] {
-      width: 100%;
-      padding: 10px 15px;
-      margin: 10px 0;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+  input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-      margin-top: 15px;
-      transition: background-color 0.3s ease;
-    }
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px;
+  }
 
-    button:hover {
-      background-color: #388e3c;
-    }
+  button:hover {
+    background-color: #388e3c;
+  }
 
-    #result {
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 18px;
-      color: #222;
-    }
-  </style>
+  .result-card {
+    background: #f1f8ff;
+    padding: 15px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: left;
+  }
+
+  .result-card p {
+    margin: 5px 0;
+  }
+
+  #copyBtn {
+    background-color: #2196f3;
+    margin-top: 10px;
+  }
+
+  #copyBtn:hover {
+    background-color: #1976d2;
+  }
+</style>
 </head>
 <body>
-  <div class="age-calculator">
-    <h2>Age Calculator</h2>
-    <input type="date" id="birthdate" max="" />
-    <button onclick="calculateAge()">Calculate Age</button>
-    <div id="result"></div>
-  </div>
 
-  <script>
-    // Set max date to today so user can't select future date
-    document.getElementById('birthdate').max = new Date().toISOString().split("T")[0];
+<div class="age-calculator">
+  <h2>Advanced Age Calculator</h2>
+  <input type="date" id="birthdate" max="">
+  <button onclick="calculateAge()">Calculate Age</button>
+  <div id="results"></div>
+  <button id="copyBtn" onclick="copyResults()">Copy Results</button>
+</div>
 
-    function calculateAge() {
-      const birthdateInput = document.getElementById('birthdate').value;
-      if (!birthdateInput) {
-        document.getElementById('result').innerText = 'Please select your birthdate!';
-        return;
-      }
+<script>
+  // Max date is today
+  document.getElementById('birthdate').max = new Date().toISOString().split("T")[0];
 
-      const birthDate = new Date(birthdateInput);
-      const today = new Date();
-
-      if (birthDate > today) {
-        document.getElementById('result').innerText = 'Birthdate cannot be in the future!';
-        return;
-      }
-
-      let years = today.getFullYear() - birthDate.getFullYear();
-      let months = today.getMonth() - birthDate.getMonth();
-      let days = today.getDate() - birthDate.getDate();
-
-      if (days < 0) {
-        months--;
-        days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-      }
-
-      if (months < 0) {
-        years--;
-        months += 12;
-      }
-
-      document.getElementById('result').innerText = `Age: ${years} years, ${months} months, and ${days} days.`;
+  function calculateAge() {
+    const birthdateInput = document.getElementById('birthdate').value;
+    if (!birthdateInput) {
+      alert('Please select your birthdate!');
+      return;
     }
-  </script>
+
+    const birthDate = new Date(birthdateInput);
+    const today = new Date();
+    if (birthDate > today) {
+      alert('Birthdate cannot be in the future!');
+      return;
+    }
+
+    // Age calculation
+    let years = today.getFullYear() - birthDate.getFullYear();
+    let months = today.getMonth() - birthDate.getMonth();
+    let days = today.getDate() - birthDate.getDate();
+
+    if (days < 0) {
+      months--;
+      days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    }
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    // Age in hours, minutes, seconds
+    const ageMs = today - birthDate;
+    const hours = Math.floor(ageMs / (1000 * 60 * 60));
+    const minutes = Math.floor(ageMs / (1000 * 60));
+    const seconds = Math.floor(ageMs / 1000);
+
+    // Day of the week born
+    const daysOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const dayBorn = daysOfWeek[birthDate.getDay()];
+
+    // Next birthday countdown
+    let nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear()+1);
+    const daysUntilNextBirthday = Math.ceil((nextBirthday - today) / (1000*60*60*24));
+
+    // Zodiac sign
+    const zodiacSigns = [
+      { sign: "Capricorn", start: "01-01", end: "01-19" },
+      { sign: "Aquarius", start: "01-20", end: "02-18" },
+      { sign: "Pisces", start: "02-19", end: "03-20" },
+      { sign: "Aries", start: "03-21", end: "04-19" },
+      { sign: "Taurus", start: "04-20", end: "05-20" },
+      { sign: "Gemini", start: "05-21", end: "06-20" },
+      { sign: "Cancer", start: "06-21", end: "07-22" },
+      { sign: "Leo", start: "07-23", end: "08-22" },
+      { sign: "Virgo", start: "08-23", end: "09-22" },
+      { sign: "Libra", start: "09-23", end: "10-22" },
+      { sign: "Scorpio", start: "10-23", end: "11-21" },
+      { sign: "Sagittarius", start: "11-22", end: "12-21" },
+      { sign: "Capricorn", start: "12-22", end: "12-31" }
+    ];
+
+    let birthMD = ('0'+(birthDate.getMonth()+1)).slice(-2) + '-' + ('0'+birthDate.getDate()).slice(-2);
+    let zodiac = zodiacSigns.find(z => birthMD >= z.start && birthMD <= z.end).sign;
+
+    // Display results
+    document.getElementById('results').innerHTML = `
+      <div class="result-card"><p><strong>Age:</strong> ${years} years, ${months} months, ${days} days</p></div>
+      <div class="result-card"><p><strong>Age in Hours:</strong> ${hours}, Minutes: ${minutes}, Seconds: ${seconds}</p></div>
+      <div class="result-card"><p><strong>Day of Birth:</strong> ${dayBorn}</p></div>
+      <div class="result-card"><p><strong>Zodiac Sign:</strong> ${zodiac}</p></div>
+      <div class="result-card"><p><strong>Days until Next Birthday:</strong> ${daysUntilNextBirthday}</p></div>
+    `;
+  }
+
+  function copyResults() {
+    const resultsText = document.getElementById('results').innerText;
+    navigator.clipboard.writeText(resultsText)
+      .then(() => alert('Results copied to clipboard!'))
+      .catch(() => alert('Failed to copy.'));
+  }
+</script>
+
 </body>
 </html>
